@@ -12,6 +12,21 @@ module.exports = {
   /*
    * @TODO: index과 indexView 액션을 객체 리터럴로 묶어 익스포트
    */
+
+  index: (req,res,next) => { //DB액션
+    User.find()
+      .then(users=>{
+        res.locals.users = users;
+        next();
+      })
+      .catch(error=>{
+        console.log(`Error getting users: ${error.message}`);
+        next(error);
+      });
+  },
+  indexView: (req,res) =>{
+    res.renders("users/index")
+  }
 };
 
 /**
